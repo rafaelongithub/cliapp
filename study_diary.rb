@@ -1,6 +1,7 @@
 require 'sqlite3'
 require_relative 'study-classes/study_category.rb'
 require_relative 'study-classes/study_item.rb'
+require 'io/console'
 
 def get_category_by_id(category_id)
   db = SQLite3::Database.open "db/database.db"
@@ -59,8 +60,19 @@ def search_for_study_item(search_word)
   result_itens
 end
 
-def clear_and_wait
-  system("clear")
+def clear
+  system('clear')
+end
+
+def wait_keypress
+  puts
+  puts 'Pressione qualquer tecla para continuar'
+  STDIN.getch
+end
+
+def wait_and_clear
+  wait_keypress
+  clear
 end
 
 def menu
@@ -75,6 +87,8 @@ def menu
 end
 
 opc = 1
+
+clear
 
 while opc != 5
   puts menu
@@ -94,4 +108,5 @@ while opc != 5
     search_word = gets().chomp.to_s
     puts search_for_study_item(search_word)
   end
+  wait_and_clear()
 end
